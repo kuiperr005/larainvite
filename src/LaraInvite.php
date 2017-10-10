@@ -19,6 +19,12 @@ class LaraInvite implements InvitationInterface
     private $email;
 
     /**
+     * Message to add to the invite
+     * @var string
+     */
+    private $message;
+
+    /**
      * Referral Code for invitation
      * @var string
      */
@@ -51,9 +57,9 @@ class LaraInvite implements InvitationInterface
     /**
      * {@inheritdoc}
      */
-    public function invite($email, $referral, $expires, $beforeSave = null)
+    public function invite($email, $message, $referral, $expires, $beforeSave = null)
     {
-        $this->readyPayload($email, $referral, $expires)
+        $this->readyPayload($email, $message, $referral, $expires)
              ->createInvite($beforeSave)
              ->publishEvent('invited');
         return $this->code;
@@ -202,6 +208,7 @@ class LaraInvite implements InvitationInterface
     {
         $this->getModelInstance();
         $this->instance->email      = $this->email;
+        $this->instance->message    = $this->message;
         $this->instance->user_id    = $this->referral;
         $this->instance->valid_till = $this->expires;
         $this->instance->code       = $code;
@@ -249,9 +256,10 @@ class LaraInvite implements InvitationInterface
      * @param  DateTime $expires  expiration of token
      * @return self
      */
-    private function readyPayload($email, $referral, $expires)
+    private function readyPayload($email, $message, $referral, $expires)
     {
         $this->email    = $email;
+        $this->message  = $message;
         $this->referral = $referral;
         $this->expires  = $expires;
         return $this;
