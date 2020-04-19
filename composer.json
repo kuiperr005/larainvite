@@ -14,7 +14,8 @@
         "php": ">=5.5.9",
         "illuminate/support": "^5.1",
         "illuminate/database": "^5.1",
-        "illuminate/events": "^5.1"
+        "illuminate/events": "^5.1",
+        "junaidnasir/larainvite": "dev-master"
     },
     "autoload": {
         "psr-4": {
