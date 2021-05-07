@@ -59,7 +59,7 @@ class LaraInvite implements InvitationInterface
      * @var Junaidnasir\Larainvite\Models\LaraInviteModel
      */
     private $instance = null;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -70,7 +70,7 @@ class LaraInvite implements InvitationInterface
              ->publishEvent('invited');
         return $this->code;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -85,7 +85,7 @@ class LaraInvite implements InvitationInterface
         }
         return $this;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -104,7 +104,7 @@ class LaraInvite implements InvitationInterface
         }
         return 'Invalid';
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -118,14 +118,17 @@ class LaraInvite implements InvitationInterface
         }
         return false;
     }
-    
+
     /**
      * {@inheritdoc}
      */
-    public function cancel()
+    public function cancel($decline_reason = null)
     {
         if ($this->isValid()) {
             $this->instance->status = 'canceled';
+            if($decline_reason) {
+                $this->instance->decline_reason = $decline_reason;
+            }
             $this->instance->save();
             $this->publishEvent('canceled');
             return true;
@@ -140,7 +143,7 @@ class LaraInvite implements InvitationInterface
     {
         return $this->exist;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -148,7 +151,7 @@ class LaraInvite implements InvitationInterface
     {
         return (!$this->isExpired() && $this->isPending());
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -165,7 +168,7 @@ class LaraInvite implements InvitationInterface
         $this->publishEvent('expired');
         return true;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -184,7 +187,7 @@ class LaraInvite implements InvitationInterface
     {
         return ($this->isValid() && ($this->instance->email == $email));
     }
-    
+
     /**
      * Fire junaidnasir.larainvite.invited again for the invitation
      * @return true

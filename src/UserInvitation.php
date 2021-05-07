@@ -1,15 +1,15 @@
 <?php namespace Junaidnasir\Larainvite;
 
-use \Exception;
 use Carbon\Carbon;
-use Junaidnasir\Larainvite\invitationInterface;
+use Exception;
 
 /**
-* User Invitation class
-*/
+ * User Invitation class
+ */
 class UserInvitation
 {
     private $interface;
+
     function __construct(invitationInterface $interface)
     {
         $this->interface = $interface;
@@ -19,6 +19,7 @@ class UserInvitation
     {
         $expires = (is_null($expires)) ? Carbon::now()->addHour(config('larainvite.expires')) : $expires;
         $this->validateEmail($email);
+
         return $this->interface->invite($email, $message, $entityId, $referral, $expires, $beforeSave);
     }
 
@@ -51,25 +52,28 @@ class UserInvitation
     {
         return $this->interface->setCode($code)->isAllowed($email);
     }
+
     public function consume($code)
     {
         return $this->interface->setCode($code)->consume();
     }
 
-    public function cancel($code)
+    public function cancel($code, $decline_reason = null)
     {
-        return $this->interface->setCode($code)->cancel();
+        return $this->interface->setCode($code)->cancel($decline_reason);
     }
 
     public function reminder($code)
     {
         return $this->interface->setCode($code)->reminder();
     }
+
     public function validateEmail($email)
     {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new Exception("Invalid Email Address", 1);
         }
+
         return $this;
     }
 }

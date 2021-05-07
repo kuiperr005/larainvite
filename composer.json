@@ -2,7 +2,7 @@
     "name": "rubenkuipers/larainvite",
     "description": "Laravel Invitation package, existing users can invite others by email",
     "keywords": ["laravel", "invite", "invitations"],
-    "homepage": "https://github.com/junaidnasir/larainvite",
+    "homepage": "https://github.com/rubenkuipers/larainvite",
     "license": "MIT",
     "authors": [
         {
