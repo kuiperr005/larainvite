@@ -67,9 +67,9 @@ class LaraInvite implements InvitationInterface
     /**
      * {@inheritdoc}
      */
-    public function invite($email, $message, $entityId, $referral, $expires, $beforeSave = null)
+    public function invite($email, $message, $entityId, $referral, $expires, $status_message = null, $beforeSave = null)
     {
-        $this->readyPayload($email, $message, $entityId, $referral, $expires)
+        $this->readyPayload($email, $message, $entityId, $referral, $expires, $status_message)
              ->createInvite($beforeSave)
              ->publishEvent('invited');
         return $this->code;
@@ -269,13 +269,14 @@ class LaraInvite implements InvitationInterface
      * @param  DateTime $expires  expiration of token
      * @return self
      */
-    private function readyPayload($email, $message, $entityId, $referral, $expires)
+    private function readyPayload($email, $message, $entityId, $referral, $expires, $status_message)
     {
         $this->email    = $email;
         $this->message  = $message;
         $this->entityId = $entityId;
         $this->referral = $referral;
         $this->expires  = $expires;
+        $this->status_message  = $status_message;
         return $this;
     }
 
