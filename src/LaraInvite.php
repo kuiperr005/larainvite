@@ -191,12 +191,12 @@ class LaraInvite implements InvitationInterface
     }
     
     /**
-     * Fire junaidnasir.larainvite.invited again for the invitation
+     * dispatch junaidnasir.larainvite.invited again for the invitation
      * @return true
      */
     public function reminder()
     {
-        Event::fire('junaidnasir.larainvite.invited', $this->instance, false);
+        Event::dispatch('junaidnasir.larainvite.invited', $this->instance, false);
         return true;
     }
 
@@ -281,13 +281,13 @@ class LaraInvite implements InvitationInterface
     }
 
     /**
-     * Fire Laravel event
+     * dispatch Laravel event
      * @param  string $event event name
      * @return self
      */
     private function publishEvent($event)
     {
-        Event::fire('junaidnasir.larainvite.'.$event, $this->instance, false);
+        Event::dispatch('junaidnasir.larainvite.'.$event, $this->instance, false);
         return $this;
     }
 }
