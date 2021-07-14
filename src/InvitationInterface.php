@@ -35,13 +35,13 @@ interface InvitationInterface
      * Set invitation as successful
      * @return boolean true on success | false on error
      */
-    public function consume();
+    public function consume($status_message);
 
     /**
      * Cancel an invitation
      * @return boolean true on success | false on error
      */
-    public function cancel();
+    public function cancel($status_message);
 
     /**
      * check if a code exist

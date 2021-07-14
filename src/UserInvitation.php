@@ -51,14 +51,14 @@ class UserInvitation
     {
         return $this->interface->setCode($code)->isAllowed($email);
     }
-    public function consume($code)
+    public function consume($code, $status_message)
     {
-        return $this->interface->setCode($code)->consume();
+        return $this->interface->setCode($code)->consume($status_message);
     }
 
-    public function cancel($code)
+    public function cancel($code, $status_message)
     {
-        return $this->interface->setCode($code)->cancel();
+        return $this->interface->setCode($code)->cancel($status_message);
     }
 
     public function reminder($code)

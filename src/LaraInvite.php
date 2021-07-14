@@ -59,7 +59,11 @@ class LaraInvite implements InvitationInterface
      * @var Junaidnasir\Larainvite\Models\LaraInviteModel
      */
     private $instance = null;
-    
+    /**
+     * Status message
+     * @var string
+     */
+    private $status_message = null;
     /**
      * {@inheritdoc}
      */
@@ -108,10 +112,11 @@ class LaraInvite implements InvitationInterface
     /**
      * {@inheritdoc}
      */
-    public function consume()
+    public function consume($status_message)
     {
         if ($this->isValid()) {
             $this->instance->status = 'successful';
+            $this->instance->status_message = $status_message;
             $this->instance->save();
             $this->publishEvent('consumed');
             return true;
@@ -122,17 +127,17 @@ class LaraInvite implements InvitationInterface
     /**
      * {@inheritdoc}
      */
-    public function cancel()
+    public function cancel($status_message)
     {
         if ($this->isValid()) {
             $this->instance->status = 'canceled';
+            $this->instance->status_message = $status_message;
             $this->instance->save();
             $this->publishEvent('canceled');
             return true;
         }
         return false;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -218,6 +223,7 @@ class LaraInvite implements InvitationInterface
         $this->instance->entityId   = $this->entityId;
         $this->instance->user_id    = $this->referral;
         $this->instance->valid_till = $this->expires;
+        $this->instance->status_message = $this->status_message;
         $this->instance->code       = $code;
 
         if (!is_null($beforeSave)) {
