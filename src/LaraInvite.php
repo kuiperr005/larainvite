@@ -55,12 +55,6 @@ class LaraInvite implements InvitationInterface
     private $expires;
 
     /**
-     * DateTime of referral invitation date
-     * @var DateTime
-     */
-    private $invitation_date = Carbon::now();
-
-    /**
      * Invitation Model
      * @var Junaidnasir\Larainvite\Models\LaraInviteModel
      */
@@ -224,7 +218,6 @@ class LaraInvite implements InvitationInterface
         $this->instance->entityId   = $this->entityId;
         $this->instance->user_id    = $this->referral;
         $this->instance->valid_till = $this->expires;
-        $this->instance->invitation_date = $this->invitation_date;
         $this->instance->code       = $code;
 
         if (!is_null($beforeSave)) {
